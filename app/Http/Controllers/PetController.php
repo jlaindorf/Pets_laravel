@@ -11,18 +11,25 @@ class PetController extends Controller
 {
     use HttpResponses;
 
-    public function index(Request $request){
-        try{
-            $filters= $request->query();
+    public function index(Request $request)
+    {
+        try {
 
-           $pets = Pet::query()
-            ->where('name','ilike', '%'.$filters['name'].'%')
-            ->get();
-            return $pets;
+            //pega os dados enviados via query params
+            $filters = $request->query();
+
+            //inicializa uma query
+            $pets = Pet::query();
+            //verifica-se filtro
+            if ($request->has('name') && !empty($filters['name'])) {
+                $pets->where('name', 'ilike', '%' . $filters['name'] . '%');
+            }
+            if ($request->has('age') && !empty($filters['age'])) {
+                $pets->where('age', $filters['age']);
+            }
+            //retorna o resultado
+            return $pets->get();
+        } catch (Exception $exception) {
         }
-        catch(Exception $exception){
-
-        }
-
     }
 }
