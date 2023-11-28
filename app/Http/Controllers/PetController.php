@@ -42,4 +42,25 @@ class PetController extends Controller
             return $exception->getMessage();
         }
     }
+
+    public function store(Request $request){
+        try
+      {  //receber os dados via body
+       $data =  $request->all();
+
+       $request->validate([
+        'name' => 'required|string|max:150',
+        'age' =>'int',
+        'size' => 'required|string',
+        'race_id' =>'required|int',
+        'specie_id' =>'required|int'
+       ]);
+
+      $pet=Pet::create($data);
+
+      return $pet;
+    }catch (Exception $exception) {
+        return $exception->getMessage();
+    }
+}
 }
