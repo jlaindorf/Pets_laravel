@@ -27,6 +27,9 @@ class PetController extends Controller
             if ($request->has('age') && !empty($filters['age'])) {
                 $pets->where('age', $filters['age']);
             }
+            if ($request->has('size') && !empty($filters['size'])) {
+                $pets->where('size', $filters['size']);
+            }
             //retorna o resultado
             return $pets->get();
         } catch (Exception $exception) {
