@@ -33,9 +33,13 @@ class PetController extends Controller
             if ($request->has('weight') && !empty($filters['weight'])) {
                 $pets->where('weight', $filters['weight']);
             }
+
+            //ordenar resultado da pesquisa
+            $columnOrder=$request->has('order') && !empty($filters['order']) ?  $filters['order'] : 'name';
             //retorna o resultado
-            return $pets->get();
+            return $pets->orderBy($columnOrder)->get();
         } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 }
