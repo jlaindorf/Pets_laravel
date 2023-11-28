@@ -11,4 +11,6 @@ Route::get('races',[ RaceController::class,'index']);
 Route::post('species',[ SpecieController::class,'store']);
 Route::get('species',[ SpecieController::class,'index']);
 
+Route::get('pets',[ PetController::class,'index']);
+
 
