@@ -63,7 +63,7 @@
     <header>
         <h1>Bem-vindo {{$petName}}!</h1>
     </header>
-
+    <img src="{{ $message->embed(public_path('pet.jpg'))}}"  width="300px"/>
     <section class="boas-vindas">
         <p>Olá, {{$clientName}}!</p>
         <p style="font-style: italic;">Estamos felizes por ter você e seu peludo conosco.</p>
