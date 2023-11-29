@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Race;
 use App\Traits\HttpResponses;
 use Exception;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class RaceController extends Controller
 {
@@ -34,7 +34,7 @@ class RaceController extends Controller
             return $race;
 
         } catch (Exception $exception) {
-           return $this->error($exception->getMessage(), HttpFoundationResponse::HTTP_BAD_REQUEST);
+            return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }
