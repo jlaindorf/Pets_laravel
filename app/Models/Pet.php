@@ -19,5 +19,7 @@ class Pet extends Model
     public function race(){
         return $this->hasOne(Race::class, 'id', 'race_id'); //diz que o pet tem uma raça , referencia o id e o relacionamento pelo id da raça
     }
-
+    public function specie(){
+        return $this->hasOne(Specie::class, 'id', 'specie_id'); //diz que o pet tem uma raça , referencia o id e o relacionamento pelo id da raça
+    }
     }

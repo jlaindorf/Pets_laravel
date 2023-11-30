@@ -21,7 +21,14 @@ class PetController extends Controller
             $filters = $request->query();
 
             // inicializa uma query
-            $pets = Pet::query()->with('race'); //with para puxar a raça junto
+            $pets = Pet::query()
+            /*->with('race'); //with para puxar as colunas da raça junto*/
+            ->with(['race'=> function($query){
+                $query->select('name','id');
+            }])
+            ->with(['specie' => function ($query) {
+                $query->select('name', 'id');
+            }]);
 
             // verifica se filtro
             if ($request->has('name') && !empty($filters['name'])) {
