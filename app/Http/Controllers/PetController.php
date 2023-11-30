@@ -22,6 +22,12 @@ class PetController extends Controller
 
             // inicializa uma query
             $pets = Pet::query()
+            ->select(
+                'id as id_pet',
+                'pets.name as pet_name',
+                'pets.race_id',
+                'pets.specie_id'
+            )
             /*->with('race'); //with para puxar as colunas da raça junto*/
             ->with(['race'=> function($query){
                 $query->select('name','id');
