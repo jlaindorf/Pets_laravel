@@ -27,7 +27,7 @@ class SendServicePet extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Seu pet está sujunho?Hpje é dia do banho',
+            subject: 'Seu pet está sujunho?Hoje é dia do banho',
         );
     }
 
@@ -48,6 +48,8 @@ class SendServicePet extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+
+        ];
     }
 }
