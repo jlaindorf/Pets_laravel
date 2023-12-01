@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:send-service-pet-email')
         ->timezone('America/Sao_Paulo')
-        ->at('21:22');
+        ->everyMinute();
     }
 
     /**
