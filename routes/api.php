@@ -19,3 +19,4 @@ Route::post('pets', [PetController::class, 'store']);
 Route::get('pets/export', [PetsReportController::class, 'export']);
 
 Route::post('clients', [ClientController::class, 'store']);
+Route::get('clients', [ClientController::class, 'index']);
