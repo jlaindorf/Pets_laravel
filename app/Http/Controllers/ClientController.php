@@ -44,18 +44,18 @@ class ClientController extends Controller
         $search = $request->input('name');
 
         $clients = Client::query()
-            ->select('id as client_id', 'bonus', 'people_id')
-            ->with([
-                'people' => fn ($query) =>
-                $query
-                ->select('id', 'name', 'email', 'cpf', 'contact')
+        ->select('id as client_id', 'bonus', 'people_id')
+        ->with('people')
+        ->whereHas('people', function ($query) use ($search) {
+            $query
+                // ->select('id','name','cpf', 'email', 'contact')
                 ->where('name', 'ilike', "%$search%")
                 ->orWhere('cpf', 'ilike', "%$search%")
                 ->orWhere('contact', 'ilike', "%$search%")
-                ->orWhere('email', 'ilike', "%$search%")
-            ])
-            ->get();
+                ->orWhere('email', 'ilike', "%$search%");
+        })
+        ->get();
 
-        return $clients;
+    return $clients;
     }
 }
