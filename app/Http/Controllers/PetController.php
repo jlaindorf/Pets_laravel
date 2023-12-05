@@ -87,4 +87,14 @@ class PetController extends Controller
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function destroy($id){
+        $pet = Pet::find($id);
+        if(!$pet) return $this->error('Dado Não encontrado', Response::HTTP_NOT_FOUND);
+
+        $pet->delete();
+
+        return $this->response('', Response::HTTP_NO_CONTENT);
+
+    }
 }

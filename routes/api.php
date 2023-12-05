@@ -16,6 +16,7 @@ Route::delete('species/{id}', [SpecieController::class, 'destroy']);
 
 Route::get('pets', [PetController::class, 'index']);
 Route::post('pets', [PetController::class, 'store']);
+Route::delete('pets/{id}', [PetController::class, 'destroy']);
 
 Route::get('pets/export', [PetsReportController::class, 'export']);
 
