@@ -22,8 +22,8 @@ class ClientController extends Controller
             $request->validate([
                 'name' => 'string|required|max:255',
                 'contact' => 'string|required|max:30',
-                'email' => 'string|required|unique:peoples',
-                'cpf' => 'string|required|max:30|unique:peoples'
+                'email' => 'string|required|unique:people',
+                'cpf' => 'string|required|max:30|unique:people'
             ]);
 
             $people = People::create($data);

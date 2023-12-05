@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetsReportController;
 use App\Http\Controllers\RaceController;
@@ -18,4 +19,3 @@ Route::post('pets', [PetController::class, 'store']);
 Route::get('pets/export', [PetsReportController::class, 'export']);
 
 Route::post('clients', [ClientController::class, 'store']);
-Route::post('people', [ClientController::class, 'store']);
