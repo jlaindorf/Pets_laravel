@@ -26,3 +26,5 @@ Route::get('clients', [ClientController::class, 'index']);
 
 
 Route::post('professionals', [ProfessionalController::class, 'store']);
+Route::get('professionals', [ProfessionalController::class, 'index']);
+

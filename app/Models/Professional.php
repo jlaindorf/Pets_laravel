@@ -10,4 +10,8 @@ class Professional extends Model
     use HasFactory;
 
     protected $fillable =['people_id', 'register','speciality'];
+
+    public function people() {
+        return $this->hasOne(People::class, 'id', 'people_id');
+    }
 }
