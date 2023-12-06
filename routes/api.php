@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetsReportController;
+use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\SpecieController;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,6 @@ Route::get('pets/export', [PetsReportController::class, 'export']);
 
 Route::post('clients', [ClientController::class, 'store']);
 Route::get('clients', [ClientController::class, 'index']);
+
+
+Route::post('professionals', [ProfessionalController::class, 'store']);
