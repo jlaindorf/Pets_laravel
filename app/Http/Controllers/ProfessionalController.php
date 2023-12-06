@@ -1,17 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Symfony\Component\HttpFoundation\Response;
 use App\Models\People;
 use App\Models\Professional;
 use Illuminate\Http\Request;
 
+use HttpResponses;
 class ProfessionalController extends Controller
+
 {
     public function store(Request $request)
     {
 
         try {
+
+            $request->validate([
+                'name' => 'string|required|max:255',
+                'contact' => 'string|required|max:30',
+                'email' => 'string|required|unique:people',
+                'cpf' => 'string|required|max:30|unique:people',
+                'register' => 'string|required',
+                'speciality' => 'string|required'
+
+            ]);
+
+
           $dataPeople = $request->only('name','cpf','contact','email');
           $dataProfessional = $request->only('register','speciality');
 
@@ -27,7 +41,7 @@ class ProfessionalController extends Controller
 
            return $people;
         } catch (\Exception $exception) {
-
+            return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 }
 }
