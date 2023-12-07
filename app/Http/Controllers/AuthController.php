@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -12,10 +13,43 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
+    private $permissions = [
+        'ADMIN' => [
+            'create-races',
+            'get-races',
+            'create-species',
+            'get-species',
+            'delete-species',
+            'create-pets',
+            'get-pets',
+            'delete-pets',
+            'create-profissionals',
+            'get-profissionals'
+        ],
+        'RECEPCIONISTA' => [
+            'create-pets',
+            'get-pets',
+            'delete-pets',
+            'export-pdf-pets',
+            'create-clients',
+            'get-clients'
+        ],
+            'VETERINARIO' => [
+            'create-races',
+            'get-races',
+            'create-species',
+            'get-species',
+            'delete-species',
+            'create-pets',
+            'get-pets',
+            'delete-pets',
+            'create-vaccines'
+        ]
+    ];
+
     public function store(Request $request)
     {
         try {
-
             $data = $request->only('email', 'password');
 
             $request->validate([
@@ -28,17 +62,16 @@ class AuthController extends Controller
             if(!$authenticated) {
                 return $this->error('Não autorizado. Credenciais incorretas', Response::HTTP_UNAUTHORIZED);
             }
-
-            // gerar o token de acesso
-
             $request->user()->tokens()->delete();
 
-            $token = $request->user()->createToken('simple');
+            $profile = Profile::find($request->user()->profile_id);
 
+            $permissionsUser =  $this->permissions[$profile->name];
+
+             $token = $request->user()->createToken('simple', $permissionsUser);
             return $this->response('Autorizado', 201, [
                 'token' => $token->plainTextToken
             ]);
-
 
         } catch (\Exception $exception) {
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
