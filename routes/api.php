@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetsReportController;
@@ -33,6 +34,8 @@ Route::post('professionals', [ProfessionalController::class, 'store']);
 Route::get('professionals', [ProfessionalController::class, 'index']);
 
 Route::post('vaccines', [VaccineController::class, 'store']);
+Route::post('logout', [AuthController::class, 'logout']);
 });
 Route::post('users', [UserController::class, 'store']);
+Route::post('login', [AuthController::class, 'store']);
 
