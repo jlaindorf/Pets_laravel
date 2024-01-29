@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route params -> DELETE, PUT, GET(unico)->middleware(['auth:sanctum']);
 
     Route::post('species', [SpecieController::class, 'store'])->middleware(['ability:create-species']);
-    Route::get('species', [SpecieController::class, 'index'])->middleware(['ability:get-species']);
+
     Route::delete('species/{id}', [SpecieController::class, 'destroy'])->middleware(['ability:delete-species']);
 
     Route::get('pets', [PetController::class, 'index'])->middleware(['ability:get-pets']);
@@ -40,6 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
 });
-
+Route::get('species', [SpecieController::class, 'index']);
 Route::post('login', [AuthController::class, 'store']);
 Route::post('users', [UserController::class, 'store']);
