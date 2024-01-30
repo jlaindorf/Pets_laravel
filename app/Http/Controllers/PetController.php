@@ -59,6 +59,9 @@ class PetController extends Controller
                 $pets->where('weight', $filters['weight']);
             }
 
+            if ($request->has('race_id') && !empty($filters['race_id'])) {
+                $pets->where('race_id', $filters['race_id']);
+            }
             // retorna o resultado
             $columnOrder = $request->has('order') && !empty($filters['order']) ?  $filters['order'] : 'name';
 
