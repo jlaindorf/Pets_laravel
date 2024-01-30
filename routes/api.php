@@ -43,5 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('pets', [PetController::class, 'store']);
 Route::get('pets', [PetController::class, 'index']);
 Route::get('species', [SpecieController::class, 'index']);
+
 Route::post('login', [AuthController::class, 'store']);
 Route::post('users', [UserController::class, 'store']);
