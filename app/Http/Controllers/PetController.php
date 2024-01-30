@@ -22,13 +22,16 @@ class PetController extends Controller
 
             // inicializa uma query
             $pets = Pet::query()
-          /*  ->select(
-                'id as id_pet',
+            ->select(
+                'id ',
                 'pets.name as pet_name',
                 'pets.race_id',
-                'pets.specie_id'
+                'pets.specie_id',
+                'pets.size as size',
+                'pets.weight as weight',
+                'pets.age as age'
             )
-            /*->with('race'); //with para puxar as colunas da raça junto*/
+
             ->with(['race'=> function($query){
                 $query->select('name','id');
             }])
@@ -59,8 +62,8 @@ class PetController extends Controller
                 $pets->where('weight', $filters['weight']);
             }
 
-            if ($request->has('race_id') && !empty($filters['race_id'])) {
-                $pets->where('race_id', $filters['race_id']);
+            if ($request->has('specie_id') && !empty($filters['specie_id'])) {
+                $pets->where('specie_id', $filters['specie_id']);
             }
             // retorna o resultado
             $columnOrder = $request->has('order') && !empty($filters['order']) ?  $filters['order'] : 'name';
