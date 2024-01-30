@@ -20,12 +20,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Query paraments -> GET -> listar dados
     // Route params -> DELETE, PUT, GET(unico)->middleware(['auth:sanctum']);
 
-    //Route::post('species', [SpecieController::class, 'store'])->middleware(['ability:create-species']);
+    Route::post('species', [SpecieController::class, 'store'])->middleware(['ability:create-species']);
   //  Route::get('species', [SpecieController::class, 'index'])->middleware(['ability:get-species']);
     Route::delete('species/{id}', [SpecieController::class, 'destroy'])->middleware(['ability:delete-species']);
 
   //  Route::get('pets', [PetController::class, 'index'])->middleware(['ability:get-pets']);
-    Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets']);
+  //  Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets']);
     Route::delete('pets/{id}', [PetController::class, 'destroy'])->middleware(['ability:delete-pets']);
 
     Route::get('pets/export', [PetsReportController::class, 'export'])->middleware(['ability:export-pdf-pets']);
@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
 });
-Route::post('species', [SpecieController::class, 'store']);
+Route::post('pets', [PetController::class, 'store']);
 Route::get('pets', [PetController::class, 'index']);
 Route::get('species', [SpecieController::class, 'index']);
 Route::post('login', [AuthController::class, 'store']);
