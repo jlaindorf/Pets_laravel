@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendWelcomePet;
+use App\Models\Client;
+use App\Models\People;
 use App\Models\Pet;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -22,28 +24,27 @@ class PetController extends Controller
 
             // inicializa uma query
             $pets = Pet::query()
-            ->select(
-                'id ',
-                'pets.name as pet_name',
-                'pets.race_id',
-                'pets.specie_id',
-                'pets.size as size',
-                'pets.weight as weight',
-                'pets.age as age'
-            )
+                ->select(
+                    'id',
+                    'pets.name as pet_name',
+                    'pets.race_id',
+                    'pets.specie_id',
+                    'pets.size as size',
+                    'pets.weight as weight',
+                    'pets.age as age'
+                )
+                #->with('race') // traz todas as colunas
+                ->with(['race' => function ($query) {
+                    $query->select('name', 'id');
+                }])
+                ->with('vaccines.professional.people')
+                /*
+                ->with(['vaccines.professional.people' => function ($query) {
+                    $query->orderBy('created_at', 'desc'); // mostra exemplos
+                }])
+                */
+                ->with('specie');
 
-            ->with(['race'=> function($query){
-                $query->select('name','id');
-            }])
-            ->with(['specie' => function ($query) {
-                $query->select('name', 'id');
-            }])
-            ->with('vaccines.professional.people')
-
-           /* ->with(['vaccines.professional.people' => function ($query){
-                $query->orderby('created_at');
-            }])*/
-            ->with('specie');
 
             // verifica se filtro
             if ($request->has('name') && !empty($filters['name'])) {
@@ -65,6 +66,7 @@ class PetController extends Controller
             if ($request->has('specie_id') && !empty($filters['specie_id'])) {
                 $pets->where('specie_id', $filters['specie_id']);
             }
+
             // retorna o resultado
             $columnOrder = $request->has('order') && !empty($filters['order']) ?  $filters['order'] : 'name';
 
@@ -84,15 +86,21 @@ class PetController extends Controller
                 'name' => 'required|string|max:150',
                 'age' => 'int',
                 'weight' => 'numeric',
-                'size' => 'required|string', // melhorar validacao para enum
+                'size' => 'required|string|in:SMALL,MEDIUM,LARGE,EXTRA_LARGE', // melhorar validacao para enum
                 'race_id' => 'required|int',
-                'specie_id' => 'required|int'
+                'specie_id' => 'required|int',
+                'client_id' => 'int'
             ]);
 
             $pet = Pet::create($data);
 
-            Mail::to('julioluzlaindorf@gmail.com','Julio Laindorf')
-            ->send(new SendWelcomePet($pet->name, 'Julio Laindorf'));
+            if (!empty($pet->client_id)) {
+
+                $people = People::find($pet->client_id);
+
+                Mail::to($people->email, $people->name)
+                    ->send(new SendWelcomePet($pet->name, 'Henrique Douglas'));
+            }
 
             return $pet;
         } catch (\Exception $exception) {
@@ -102,11 +110,12 @@ class PetController extends Controller
 
     public function destroy($id){
         $pet = Pet::find($id);
-        if(!$pet) return $this->error('Dado Não encontrado', Response::HTTP_NOT_FOUND);
+
+        if(!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
 
         $pet->delete();
 
-        return $this->response('', Response::HTTP_NO_CONTENT);
+        return $this->response('',Response::HTTP_NO_CONTENT);
 
     }
 }
