@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PetController;
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('species/{id}', [SpecieController::class, 'destroy'])->middleware(['ability:delete-species']);
 
     Route::get('pets', [PetController::class, 'index'])->middleware(['ability:get-pets']);
-Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets', /*ValidateLimitStudentsToUser::class*/]);
+    Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets']);
     Route::delete('pets/{id}', [PetController::class, 'destroy'])->middleware(['ability:delete-pets']);
 
     Route::get('pets/export', [PetsReportController::class, 'export'])->middleware(['ability:export-pdf-pets']);
@@ -48,5 +49,7 @@ Route::post('pets', [PetController::class, 'store'])->middleware(['ability:creat
 });
 
 
+Route::get('pets/{id}', [AdoptionController::class, 'show']);
+Route::get('pets/adocao', [AdoptionController::class, 'index']);
 Route::post('login', [AuthController::class, 'store']);
 Route::post('users', [UserController::class, 'store']);
