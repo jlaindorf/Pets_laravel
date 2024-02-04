@@ -108,14 +108,15 @@ class PetController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $pet = Pet::find($id);
 
-        if(!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
+        if (!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
 
         $pet->delete();
 
-        return $this->response('',Response::HTTP_NO_CONTENT);
-
+        return $this->response('', Response::HTTP_NO_CONTENT);
     }
+
 }
