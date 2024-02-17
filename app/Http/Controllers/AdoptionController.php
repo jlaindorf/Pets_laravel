@@ -27,17 +27,10 @@ class AdoptionController extends Controller
                 ->select(
                     'id',
                     'pets.name as pet_name',
-                    'pets.race_id',
-                    'pets.specie_id',
-                    'pets.size as size',
-                    'pets.weight as weight',
                     'pets.age as age'
                 )
                 #->with('race') // traz todas as colunas
-                ->with(['race' => function ($query) {
-                    $query->select('name', 'id');
-                }])
-                ->with('specie')
+
                 ->where('client_id', null);
 
 
