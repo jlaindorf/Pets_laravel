@@ -44,26 +44,29 @@ class ProfessionalController extends Controller
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 }
-
 public function index(Request $request)
 {
 
-    $search = $request->input('name'); // para o params
+    $search = $request->input('text'); // filtro query params
 
     $professionals = Professional::query()
-    /*->select('id as client_id', 'bonus', 'people_id')*/
-    ->with('people')
-  /*  ->whereHas('people', function ($query) use ($search) {
-        $query
-            // ->select('id','name','cpf', 'email', 'contact')
-            ->where('name', 'ilike', "%$search%")
-            ->orWhere('cpf', 'ilike', "%$search%")
-            ->orWhere('contact', 'ilike', "%$search%")
-            ->orWhere('email', 'ilike', "%$search%");
-    })*/
-    ->get();
+        ->with('people')
+        ->whereHas('people', function ($query) use ($search) {
+            $query
+                ->where('name', 'ilike', "%$search%")
+                ->orWhere('cpf', 'ilike', "%$search%")
+                ->orWhere('contact', 'ilike', "%$search%")
+                ->orWhere('email', 'ilike', "%$search%");
+        });
 
-return $professionals;
+        if($search) {
+            $professionals
+            ->orWhere("register", $search)
+            ->orWhere("speciality", 'ilike', "%$search%");
+        }
+
+    return $professionals->get();
 }
 }
+
 

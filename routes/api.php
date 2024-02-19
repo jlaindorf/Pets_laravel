@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PetController;
@@ -42,3 +43,6 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::post('users', [UserController::class, 'store']);
 Route::post('login', [AuthController::class, 'store']);
 
+
+Route::get('pets/adocao', [AdoptionController::class, 'index']);
+Route::get('pets/{id}', [AdoptionController::class, 'show']);

@@ -23,8 +23,8 @@ class AuthController extends Controller
             'create-pets',
             'get-pets',
             'delete-pets',
-            'create-profissionals',
-            'get-profissionals'
+            'create-professionals',
+            'get-professionals'
         ],
         'RECEPCIONISTA' => [
             'create-pets',
@@ -32,9 +32,10 @@ class AuthController extends Controller
             'delete-pets',
             'export-pdf-pets',
             'create-clients',
-            'get-clients'
+            'get-clients',
+            'get-species'
         ],
-            'VETERINARIO' => [
+        'VETERINARIO' => [
             'create-races',
             'get-races',
             'create-species',
@@ -59,26 +60,29 @@ class AuthController extends Controller
 
             $authenticated = Auth::attempt($data);
 
-            if(!$authenticated) {
+            if (!$authenticated) {
                 return $this->error('Não autorizado. Credenciais incorretas', Response::HTTP_UNAUTHORIZED);
             }
+
             $request->user()->tokens()->delete();
 
             $profile = Profile::find($request->user()->profile_id);
 
             $permissionsUser =  $this->permissions[$profile->name];
 
-             $token = $request->user()->createToken('simple', $permissionsUser);
-            return $this->response('Autorizado', 201, [
-                'token' => $token->plainTextToken
-            ]);
+            $token = $request->user()->createToken('simple', $permissionsUser);
 
+            return $this->response('Autorizado', 201, [
+                'token' => $token->plainTextToken,
+                'permissions' => $permissionsUser
+            ]);
         } catch (\Exception $exception) {
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
         return $this->response('', Response::HTTP_NO_CONTENT);
     }
