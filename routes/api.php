@@ -13,7 +13,7 @@ use App\Http\Controllers\VaccineController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
-
+Route::post('users', [UserController::class, 'store']);
 Route::post('races', [RaceController::class, 'store'])->middleware(['auth:sanctum', 'ability:create-races']);
 Route::get('races', [RaceController::class, 'index'])->middleware(['auth:sanctum', 'ability:get-races']);
 
@@ -40,7 +40,7 @@ Route::get('professionals', [ProfessionalController::class, 'index']);
 Route::post('vaccines', [VaccineController::class, 'store']);
 Route::post('logout', [AuthController::class, 'logout']);
 });
-Route::post('users', [UserController::class, 'store']);
+
 Route::post('login', [AuthController::class, 'store']);
 
 
