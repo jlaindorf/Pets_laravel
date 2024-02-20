@@ -34,7 +34,8 @@ class AuthController extends Controller
             'export-pdf-pets',
             'create-clients',
             'get-clients',
-            'get-species'
+            'get-species',
+            'get-races'
         ],
         'VETERINARIO' => [
             'create-races',
