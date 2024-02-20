@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Env;
 
 class InitialUser extends Seeder
 {
@@ -14,9 +15,9 @@ class InitialUser extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'ADMIN',
-            'email'=> 'juliolaindorf@gmail.com',
-            'password' => 'adminSenha',
+            'name' => 'Julio',
+            'email'=> 'julio@gmail.com',
+            'password' => Env('DEFAULT_PASSWORD'),
             'profile_id' => 1
         ]);
     }
