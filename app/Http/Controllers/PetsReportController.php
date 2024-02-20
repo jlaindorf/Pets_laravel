@@ -26,6 +26,9 @@ class PetsReportController extends Controller
         if ($request->has('weight') && !empty($filters['weight'])) {
             $pets->where('weight', $filters['weight']);
         }
+        if ($request->has('specie_id') && !empty($filters['specie_id'])) {
+            $pets->where('specie_id', $filters['specie_id']);
+        }
 
         $result = $pets->get();
 
