@@ -125,4 +125,22 @@ class PetController extends Controller
         if (!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
         return $pet;
     }
+    public function update($id, Request $request)
+    {
+        $data = $request->all();
+        $request->validate([
+            'name' => 'required|string|max:150',
+            'age' => 'int',
+            'weight' => 'numeric',
+            'size' => 'required|string|in:SMALL,MEDIUM,LARGE,EXTRA_LARGE', // melhorar validacao para enum
+            'race_id' => 'required|int',
+            'specie_id' => 'required|int',
+            'client_id' => 'int'
+        ]);
+        $pet = Pet::find($id);
+        if (!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
+        $pet->update($data);
+        $pet->save();
+        return $pet;
+    }
 }
