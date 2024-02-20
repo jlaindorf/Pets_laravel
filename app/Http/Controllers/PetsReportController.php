@@ -38,4 +38,28 @@ class PetsReportController extends Controller
 
         return $pdf->stream('relatorio_pets.pdf');
     }
+    public function showPerfil(Request $request){
+        $id = $request->input('id');
+
+        $pet = Pet::
+        with('race')
+        ->with('specie')
+        ->with('vaccines')
+        ->find($id);
+
+        $name = $pet->name;
+        $race = $pet->race->name;
+        $specie = $pet->specie->name;
+        $vaccines = $pet->vaccines;
+
+        $pdf = Pdf::loadView('pdfs.perfilPet', [
+            'name' => $name,
+            'race' => $race,
+            'specie' => $specie,
+            'vaccines' => $vaccines
+        ]);
+
+        return $pdf->stream('perfil.pdf');
+    }
 }
+
