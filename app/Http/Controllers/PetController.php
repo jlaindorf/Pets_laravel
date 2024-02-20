@@ -119,4 +119,10 @@ class PetController extends Controller
         return $this->response('', Response::HTTP_NO_CONTENT);
     }
 
+    public function show($id)
+    {
+        $pet = Pet::find($id);
+        if (!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
+        return $pet;
+    }
 }

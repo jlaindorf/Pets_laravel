@@ -15,34 +15,34 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 
 
-Route::post('races', [RaceController::class, 'store'])->middleware(['auth:sanctum', 'ability:create-races']);
-Route::get('races', [RaceController::class, 'index'])->middleware(['auth:sanctum', 'ability:get-races']);
+    Route::get('races', [RaceController::class, 'index'])->middleware(['ability:get-races']);
+    Route::post('races', [RaceController::class, 'store'])->middleware(['ability:create-races']);
 
-Route::post('races', [RaceController::class, 'store']);
-Route::get('races', [RaceController::class, 'index']);
+    Route::get('species', [SpecieController::class, 'index'])->middleware(['ability:get-species']);
+    Route::post('species', [SpecieController::class, 'store'])->middleware(['ability:create-species']);
+    Route::delete('species/{id}', [SpecieController::class, 'destroy'])->middleware(['ability:delete-species']);
 
-Route::post('species', [SpecieController::class, 'store']);
-Route::get('species', [SpecieController::class, 'index']);
-Route::delete('species/{id}', [SpecieController::class, 'destroy']);
+    Route::get('pets/perfil', [PetsReportController::class, 'showPerfil']);
+    Route::get('pets/export', [PetsReportController::class, 'export'])->middleware(['ability:export-pdf-pets']);
+    Route::get('pets', [PetController::class, 'index'])->middleware(['ability:get-pets']);
+    Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets']);
+    Route::delete('pets/{id}', [PetController::class, 'destroy'])->middleware(['ability:delete-pets']);
+    Route::get('pets/{id}', [PetController::class, 'show'])->middleware(['ability:get-pets']);
+    Route::put('pets/{id}', [PetController::class, 'update'])->middleware(['ability:create-pets']);
 
-Route::get('pets', [PetController::class, 'index']);
-Route::post('pets', [PetController::class, 'store']);
-Route::delete('pets/{id}', [PetController::class, 'destroy']);
+    Route::post('clients', [ClientController::class, 'store'])->middleware(['ability:create-clients']);
+    Route::get('clients', [ClientController::class, 'index'])->middleware(['ability:get-clients']);
 
-Route::get('pets/export', [PetsReportController::class, 'export']);
+    Route::post('profissionals', [ProfessionalController::class, 'store'])->middleware(['ability:create-profissionals']);
+    Route::get('profissionals', [ProfessionalController::class, 'index'])->middleware(['ability:get-profissionals']);
 
-Route::post('clients', [ClientController::class, 'store']);
-Route::get('clients', [ClientController::class, 'index']);
+    Route::get('vacinacao/{id}/pets', [VaccineController::class, 'index'])->middleware(['ability:create-vaccines']);
+    Route::post('vaccines', [VaccineController::class, 'store'])->middleware(['ability:create-vaccines']);
 
+    Route::post('logout', [AuthController::class, 'logout']);
 
-Route::post('professionals', [ProfessionalController::class, 'store']);
-Route::get('professionals', [ProfessionalController::class, 'index']);
-
-Route::post('vaccines', [VaccineController::class, 'store']);
-Route::post('logout', [AuthController::class, 'logout']);
-
-Route::post('users', [UserController::class, 'store'])->middleware(['auth:sanctum', 'ability:create-users']);
-Route::get('users', [UserController::class, 'index'])->middleware(['ability:create-users']);
+    Route::post('users', [UserController::class, 'store'])->middleware(['ability:create-users']);
+    Route::get('users', [UserController::class, 'index'])->middleware(['ability:create-users']);
 
 });
 
