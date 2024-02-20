@@ -14,7 +14,7 @@ class UserController extends Controller
     use HttpResponses;
 
     public function index() {
-        $users = User::all();
+        $users = User::query()->with('profile')->get();
         return $users;
     }
 

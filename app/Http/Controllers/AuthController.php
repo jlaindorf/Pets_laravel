@@ -75,7 +75,9 @@ class AuthController extends Controller
 
             return $this->response('Autorizado', 201, [
                 'token' => $token->plainTextToken,
-                'permissions' => $permissionsUser
+                'permissions' => $permissionsUser,
+                'name' => $request->user()->name,
+                'profile' => $profile->name
             ]);
         } catch (\Exception $exception) {
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
