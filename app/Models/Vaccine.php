@@ -9,7 +9,7 @@ class Vaccine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['professional_id', 'pet_id', 'dose', 'name','status','observations'];
+    protected $fillable = ['professional_id', 'pet_id', 'dose', 'name','status','observations','date'];
 
 
     public function professional(){
