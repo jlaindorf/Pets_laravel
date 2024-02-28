@@ -51,7 +51,7 @@
         <p>Estamos entrando em contato para solicitar a documentação necessária para finalizar o processo em andamento.
         </p>
         <p>Por favor, clique no link a seguir para acessar o formulário: <a
-                href="http://localhost:5173/adocoes/documentos/1" class="link-button">Acessar Formulário</a></p>
+                href="http://localhost:5174/adocoes/documentos/{{$id}}" class="link-button">Acessar Formulário</a></p>
         <p>Os documentos solicitados incluem:</p>
         <ul>
             <li>RG</li>

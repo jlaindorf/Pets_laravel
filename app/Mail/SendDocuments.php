@@ -14,9 +14,11 @@ class SendDocuments extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
-    public function __construct($name)
+    public $id;
+    public function __construct($name,$id)
     {
         $this->name = $name;
+        $this->id = $id;
     }
 
     /**
