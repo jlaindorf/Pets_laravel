@@ -16,7 +16,7 @@ Route::get('pets/adocao', [AdoptionController::class, 'index']);
 Route::get('pets/{id}/adocao', [AdoptionController::class, 'show']);
 Route::post('pets/adocao', [AdoptionController::class, 'store']);
 
-Route::post('upload', [AdoptionController::class, 'upload']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -61,5 +61,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
-
+Route::post('upload', [AdoptionController::class, 'upload']);
 Route::post('login', [AuthController::class, 'store']);
