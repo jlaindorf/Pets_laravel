@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('people_id');
             $table->boolean('bonus')->default(false);
             $table->timestamps();
-            $table->foreign('people_id')->references('id')->on('people');
+            $table->foreign('people_id')->references('id')->on('peoples');
         });
     }
 

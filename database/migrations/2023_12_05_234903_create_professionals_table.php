@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('professionals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('people_id');
-            $table->string('speciality',150);
-            $table->string('register',30);
-            $table->foreign('people_id')->references('id')->on('people');
+            $table->string('speciality', 150);
+            $table->string('register', 30);
+            $table->foreign('people_id')->references('id')->on('peoples');
             $table->timestamps();
         });
     }
