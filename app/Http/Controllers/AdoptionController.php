@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\File;
 use App\Models\People;
 use App\Models\Pet;
+use App\Models\SolicitationDocument;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -137,6 +138,9 @@ class AdoptionController extends Controller
         $pet->update(['client_id' => $client->id]);
         $pet->save();
 
+        $solicitation = SolicitationDocument::create([
+            'client_id' => $client->id
+        ]);
 
         Mail::to($people->email, $people->name)
             ->send(new SendDocuments($people->name));
@@ -165,8 +169,6 @@ class AdoptionController extends Controller
             ]
         );
 
-        return [
-            'message' => 'Arquivo criado com sucesso'
-        ];
+        return ['message' => 'Arquivo criado com sucesso'];
     }
 }
