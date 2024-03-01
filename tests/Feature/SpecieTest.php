@@ -67,4 +67,18 @@ class SpecieTest extends TestCase
         $response->assertStatus(204);
        $this->assertDatabaseMissing('species',['id'=>$specieCreated]);
     }
+    public function test_user_can_delete_specie_with_many_species_in_database(){
+
+        Specie::factory(10)->create();
+        $specieCreated = Specie::factory()->create();
+
+        $user = User::factory()->create(['profile_id'=>1, 'password'=>'12345678']);
+        $response = $this->actingAs($user)->delete("/api/species/$specieCreated->id");
+
+        $this->assertDatabaseCount('species',10);
+
+       $this->assertDatabaseMissing('species',['id'=>$specieCreated]);
+       $response->assertStatus(204);
+
+    }
 }
