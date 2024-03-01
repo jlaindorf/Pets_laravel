@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Pet;
+use App\Models\Race;
 use App\Models\Specie;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -79,6 +81,24 @@ class SpecieTest extends TestCase
 
        $this->assertDatabaseMissing('species',['id'=>$specieCreated]);
        $response->assertStatus(204);
+
+    }
+    public function test_user_can_delete_specie_with_pet(){
+
+        $specie=Specie::factory()->create();
+        $race= Race::factory()->create();
+        $pet= Pet::factory()->create(['race_id'=>$race->id,'specie_id'=>$specie->id]);
+
+        $user = User::factory()->create(['profile_id'=>2, 'password'=>'12345678']);
+        $response = $this->actingAs($user)->delete("/api/species/$specie->id");
+
+       $response->assertStatus(409)->assertJson([
+            'status'=>409,
+            'message'=>'Existem pets usando essa espécie',
+            'errors'=>[],
+            'data'=>[]
+       ]);
+       $this->assertDatabaseHas('species',['id'=>$specie->id]);
 
     }
 }
