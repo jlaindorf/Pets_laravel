@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Race;
 use App\Models\User;
 use Database\Seeders\InitialUser;
 use Database\Seeders\Profiles;
@@ -25,6 +26,23 @@ class RaceTest extends TestCase
             'id'=>true,
             'created_at'=>true,
             'updated_at'=>true,
+        ]);
+    }
+    public function test_list_races()
+    {
+
+        Race::factory(5)->create();
+        $user = User::factory()->create(['profile_id' => 2,'password'=>'12345678']);
+
+        $response = $this->actingAs($user)->get('/api/races');
+
+        $response->assertStatus(200)->assertJsonStructure([
+            '*' => [
+                'created_at',
+                'updated_at',
+                'name',
+                'id'
+            ]
         ]);
     }
 }
