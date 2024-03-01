@@ -57,4 +57,14 @@ class SpecieTest extends TestCase
            'data'=>[]
         ]);
     }
+    public function test_user_can_delete_specie(){
+
+        $specieCreated = Specie::factory()->create();
+
+        $user = User::factory()->create(['profile_id'=>1, 'password'=>'12345678']);
+        $response = $this->actingAs($user)->delete("/api/species/$specieCreated->id");
+
+        $response->assertStatus(204);
+       $this->assertDatabaseMissing('species',['id'=>$specieCreated]);
+    }
 }
