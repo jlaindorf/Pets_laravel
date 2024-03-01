@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Database\Seeders\InitialUser;
 use Database\Seeders\Profiles;
 
@@ -18,8 +19,6 @@ class UserTest extends TestCase
 
     public function test_user_admin_can_done_login()
     {
-        $this->seed(Profiles::class);
-        $this->seed(InitialUser::class);
 
         $response = $this->post('/api/login', [
             'email' => env("DEFAULT_EMAIL"),
@@ -43,8 +42,6 @@ class UserTest extends TestCase
 
     public function test_user_admin_permissions_load_correct()
     {
-        $this->seed(Profiles::class);
-        $this->seed(InitialUser::class);
 
         $response = $this->post('/api/login', [
             'email' => env("DEFAULT_EMAIL"),
@@ -73,4 +70,13 @@ class UserTest extends TestCase
             ]
         ]);
     }
+  /*  public function test_logout()
+    {
+        $this->seed(Profiles::class);
+        $this->seed(InitialUser::class);
+        $user = User::factory()->create(['profile_id'=>1]);
+        $response = $this->actingAs($user)->post('/api/logout');
+
+        $response->assertStatus(204);
+    }*/
 }
