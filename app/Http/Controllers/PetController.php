@@ -129,12 +129,12 @@ class PetController extends Controller
     {
         $data = $request->all();
         $request->validate([
-            'name' => 'required|string|max:150',
+            'name' => 'string|max:150',
             'age' => 'int',
             'weight' => 'numeric',
-            'size' => 'required|string|in:SMALL,MEDIUM,LARGE,EXTRA_LARGE', // melhorar validacao para enum
-            'race_id' => 'required|int',
-            'specie_id' => 'required|int',
+            'size' => 'string|in:SMALL,MEDIUM,LARGE,EXTRA_LARGE', // melhorar validacao para enum
+            'race_id' => 'int',
+            'specie_id' => 'int',
             'client_id' => 'int'
         ]);
         $pet = Pet::find($id);
