@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('pets', [PetController::class, 'index'])->middleware(['ability:get-pets']);
     Route::post('pets', [PetController::class, 'store'])->middleware(['ability:create-pets']);
     Route::delete('pets/{id}', [PetController::class, 'destroy'])->middleware(['ability:delete-pets']);
-
+    Route::put('pets/{id}', [PetController::class, 'update'])->middleware(['ability:create-pets']);
     Route::get('pets/export', [PetsReportController::class, 'export'])->middleware(['ability:export-pdf-pets']);
 
 
