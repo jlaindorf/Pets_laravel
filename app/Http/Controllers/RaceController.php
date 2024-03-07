@@ -27,9 +27,9 @@ class RaceController extends Controller
                 'name' => 'required|string|unique:races|max:50'
             ]);
 
-            $data = $request->all();
+            $body = $request->all();
 
-            $race =  Race::create($data);
+            $race =  Race::create($body);
 
             return $race;
 

@@ -80,7 +80,7 @@ class PetController extends Controller
     {
         try {
             // rebecer os dados via body
-            $data = $request->all();
+            $body = $request->all();
 
             $request->validate([
                 'name' => 'required|string|max:150',
@@ -92,7 +92,7 @@ class PetController extends Controller
                 'client_id' => 'int'
             ]);
 
-            $pet = Pet::create($data);
+            $pet = Pet::create($body);
 
             if (!empty($pet->client_id)) {
 
@@ -127,7 +127,7 @@ class PetController extends Controller
     }
     public function update($id, Request $request)
     {
-        $data = $request->all();
+        $body = $request->all();
         $request->validate([
             'name' => 'string|max:150',
             'age' => 'int',
@@ -139,7 +139,7 @@ class PetController extends Controller
         ]);
         $pet = Pet::find($id);
         if (!$pet) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
-        $pet->update($data);
+        $pet->update($body);
         $pet->save();
         return $pet;
     }

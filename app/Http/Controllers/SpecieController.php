@@ -25,9 +25,9 @@ class SpecieController extends Controller
                 'name' => 'required|string|unique:races|max:50'
             ]);
 
-            $data = $request->all();
+            $body = $request->all();
 
-            $specie =  Specie::create($data);
+            $specie =  Specie::create($body);
 
             return $specie;
 
@@ -39,9 +39,9 @@ class SpecieController extends Controller
 
         public function destroy($id) {
             $specie = Specie::find($id);
-            $count = Pet::query()->where('specie_id', $id)->count();
+            $amountPetsUsingSpecieId = Pet::query()->where('specie_id', $id)->count();
 
-        if($count !== 0) return $this->error('Existem pets usando essa espécie', Response::HTTP_CONFLICT);
+        if($amountPetsUsingSpecieId !== 0) return $this->error('Existem pets usando essa espécie', Response::HTTP_CONFLICT);
             if(!$specie) return $this->error('Dado não encontrado', Response::HTTP_NOT_FOUND);
 
             $specie->delete();
