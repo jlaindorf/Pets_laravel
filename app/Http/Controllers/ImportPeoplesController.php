@@ -51,7 +51,8 @@ class ImportPeoplesController extends Controller
                 }
 
                 DB::commit();
-                //return $csvArray;
+
+                return $this->response('Importado com sucesso',201);
 
             } else {
                 return $this->response("Arquivo ausente", 400);
