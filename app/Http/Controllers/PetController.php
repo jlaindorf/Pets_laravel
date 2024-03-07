@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Mail\SendWelcomePet;
 use App\Models\Client;
+use App\Models\File;
 use App\Models\People;
 use App\Models\Pet;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class PetController extends Controller
 {
@@ -142,5 +145,35 @@ class PetController extends Controller
         $pet->update($body);
         $pet->save();
         return $pet;
+    }
+    public function upload(Request $request)
+    {
+        $createds = [];
+
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $file) {
+
+                $description =  $request->input('description');
+
+                $slugName = Str::of($description)->slug();
+                $fileName = $slugName . '.' . $file->extension();
+
+                $pathBucket = Storage::disk('s3')->put('documentos', $file);
+                $fullPathFile = Storage::disk('s3')->url($pathBucket);
+
+                $fileCreated = File::create(
+                    [
+                        'name' => $fileName,
+                        'size' => $file->getSize(),
+                        'mime' => $file->extension(),
+                        'url' => $pathBucket
+                    ]
+                );
+
+                array_push($createds, $fileCreated);
+            }
+        }
+
+        return $createds;
     }
 }
