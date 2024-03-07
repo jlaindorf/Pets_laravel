@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ImportPeopleController;
+use App\Http\Controllers\ImportPeoplesController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetsReportController;
 use App\Http\Controllers\ProfessionalController;
@@ -60,6 +62,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 });
-
 Route::post('upload', [AdoptionController::class, 'upload']);
-Route::post('login', [AuthController::class, 'store']);
+//Route::post('csv', [CsvController::class, 'readCsvFromRequest']);
+
+Route::post('import/peoples', [ImportPeoplesController::class, 'import']);
+//Route::get('dashboard/species', [DashboardController::class, 'getSpeciesAmountByPet']);
+//Route::get('dashboard/clients', [DashboardController::class, 'getClientsAmountByMonth']);
